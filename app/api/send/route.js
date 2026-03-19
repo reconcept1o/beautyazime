@@ -8,9 +8,17 @@ const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
 
 export async function POST(request) {
   try {
-    const { name, email, phone, service, date, message, token } = await request.json();
+    // Verileri alırken 'gender'ı da ekledik
+    const { name, email, phone, service, date, message, token, gender } = await request.json();
 
-    // 1. Cloudflare Turnstile Verification
+    // 1. GENDER (HONEYPOT) KONTROLÜ - SESSİZ İMHA 🤫
+    // Eğer bot bu gizli alanı doldurduysa, mail atmıyoruz ama bota "başarılı" diyoruz.
+    if (gender && gender.length > 0) {
+      console.warn("Spam Bot Detected via Gender Honeypot. Request ignored silently.");
+      return NextResponse.json({ success: true, message: "Processed" }, { status: 200 });
+    }
+
+    // 2. Cloudflare Turnstile Verification
     const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -25,7 +33,7 @@ export async function POST(request) {
       return NextResponse.json({ error: "Bot verification failed" }, { status: 403 });
     }
 
-    // 2. Send Email to Azime Beauty
+    // 3. Send Email to Azime Beauty (Sadece bot değilse buraya ulaşır)
     await resend.emails.send({
       from: 'Azime Beauty <info@azimebeauty.com>', 
       to: 'azimebeauty@gmail.com', 
@@ -52,6 +60,7 @@ export async function POST(request) {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
+    console.error("API Error:", error);
     return NextResponse.json({ error: "Email failed", detail: error.message }, { status: 500 });
   }
 }

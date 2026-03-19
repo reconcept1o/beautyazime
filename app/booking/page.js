@@ -1,19 +1,19 @@
 "use client";
-import { useState, useEffect } from "react"; // 1. useEffect ekledik
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Turnstile } from "@marsidev/react-turnstile";
-import { useRouter } from "next/navigation"; // 2. Yönlendirme için ekledik
+import { useRouter } from "next/navigation";
 
 export default function BookingPage() {
   const router = useRouter();
   const [status, setStatus] = useState("idle"); 
   const [token, setToken] = useState("");
 
-  // Başarılı olduğunda otomatik yönlendirme yapan useEffect
+  // Başarılı olduğunda otomatik yönlendirme
   useEffect(() => {
     if (status === "success") {
       const timer = setTimeout(() => {
-        router.push("/"); // 4 saniye sonra ana sayfaya atar
+        router.push("/"); 
       }, 4000);
       return () => clearTimeout(timer);
     }
@@ -41,6 +41,7 @@ export default function BookingPage() {
         body: JSON.stringify(data),
       });
 
+      // API'den ne gelirse gelsin (Silent Kill dahil) kullanıcıya başarı gösteriyoruz
       if (res.ok) {
         setStatus("success");
       } else {
@@ -119,6 +120,27 @@ export default function BookingPage() {
         </p>
         
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px", width: "100%" }}>
+          
+          {/* HONEYPOT - GENDER TRAP FOR BOTS 🍯 */}
+          <div style={{ 
+            opacity: 0, 
+            position: "absolute", 
+            top: 0, 
+            left: 0, 
+            height: 0, 
+            width: 0, 
+            zIndex: -1, 
+            overflow: "hidden" 
+          }}>
+            <label>Gender Selection</label>
+            <input 
+              type="text" 
+              name="gender" 
+              tabIndex="-1" 
+              autoComplete="off" 
+            />
+          </div>
+
           <div style={inputGroup}>
             <label style={labelStyle}>Full Name</label>
             <input name="name" type="text" required style={inputStyle} placeholder="John Doe" />
