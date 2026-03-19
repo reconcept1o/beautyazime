@@ -22,6 +22,9 @@ export default function GalleryPage() {
 
   if (!mounted) return null;
 
+  // Mobil kontrolü için küçük bir yardımcı
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   return (
     <main style={{ backgroundColor: "#ffffff", minHeight: "100vh" }}>
       
@@ -54,21 +57,24 @@ export default function GalleryPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2 }}
-            style={{ textAlign: "center" }}
+            style={{ textAlign: "center", width: "100%" }}
           >
             <span style={{ color: "#E2C299", letterSpacing: "10px", fontSize: "12px", fontWeight: "600", textTransform: "uppercase" }}>Portfolio</span>
             <h1 style={{ 
               color: "white", 
               fontFamily: "'Cormorant Garamond', serif", 
-              fontSize: "clamp(60px, 15vw, 140px)", 
-              letterSpacing: "25px",
+              fontSize: "clamp(45px, 12vw, 140px)", 
+              letterSpacing: isMobile ? "8px" : "25px", // Mobilde 8px'e çektik ki sığsın
               textTransform: "uppercase",
               fontWeight: "300",
-              margin: "20px 0"
+              margin: "20px 0",
+              paddingLeft: isMobile ? "8px" : "25px" // Yazıyı tam ortalamak için spacing kadar soldan padding verdik
             }}>
               Curated
             </h1>
-            <p style={{ color: "white", fontFamily: "'Montserrat', sans-serif", fontWeight: "300", letterSpacing: "5px", fontSize: "14px" }}>ARTISTRY IN EVERY DETAIL</p>
+            <p style={{ color: "white", fontFamily: "'Montserrat', sans-serif", fontWeight: "300", letterSpacing: "5px", fontSize: "14px", padding: "0 20px" }}>
+              ARTISTRY IN EVERY DETAIL
+            </p>
           </motion.div>
         </div>
       </section>
@@ -77,7 +83,7 @@ export default function GalleryPage() {
       <section style={{ padding: "120px 5% 60px", textAlign: "center", maxWidth: "800px", margin: "0 auto" }}>
          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "42px", color: "#1a1a1a", fontWeight: "300" }}>Beauty Through Our Lens</h2>
          <p style={{ fontFamily: "'Montserrat', sans-serif", color: "#666", lineHeight: "2", fontSize: "15px", marginTop: "20px" }}>
-           Each transformation is a unique story of confidence and precision. Explore 92 of our signature treatments across New York and beyond.
+            Each transformation is a unique story of confidence and precision. Explore 92 of our signature treatments across New York and beyond.
          </p>
          <div style={{ width: "40px", height: "1px", background: "#E2C299", margin: "40px auto" }} />
       </section>
@@ -156,7 +162,6 @@ export default function GalleryPage() {
           background: #f8f8f8;
         }
 
-        /* Editorial Layout Logic */
         .gallery-card.large { grid-column: span 2; grid-row: span 2; }
         .gallery-card.tall { grid-row: span 2; }
 
@@ -217,7 +222,6 @@ export default function GalleryPage() {
           margin: 15px auto 0;
         }
 
-        /* Lightbox */
         .lightbox-overlay {
           position: fixed;
           inset: 0;
@@ -259,14 +263,14 @@ export default function GalleryPage() {
           color: #1a1a1a;
         }
 
-        /* Media Queries */
         @media (max-width: 1200px) {
           .editorial-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 768px) {
           .editorial-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 300px; }
           .gallery-card.large { grid-column: span 2; grid-row: span 1; }
+          .close-icon { top: 20px; right: 20px; }
         }
 
         @media (max-width: 500px) {
