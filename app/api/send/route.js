@@ -1,18 +1,25 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Build sırasında patlamaması için API key yoksa boş string geçiyoruz
+// Canlıda Cloudflare Variables kısmından gerçek keyi okuyacak
+const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder');
 
 export async function POST(request) {
+  // Runtime kontrolü: Eğer key gerçekten yoksa hata dön
+  if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 're_placeholder') {
+    console.error("Missing RESEND_API_KEY in environment variables");
+    return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
+  }
+
   try {
     const { name, email, phone, service, date, message } = await request.json();
 
     // 1. Azime Hanım'a Gelen Bildirim (Admin Maili)
-    // Gönderen kısmını doğruladığımız domain yaptık
     await resend.emails.send({
       from: 'Azime Beauty <info@send.azimebeauty.com>', 
       to: 'azimebeautynyc@gmail.com', // Azime Hanım'ın maili
-      reply_to: email, // Azime Hanım cevapla dediğinde direkt müşteriye gitsin
+      reply_to: email, 
       subject: `New Request: ${service} - ${name}`,
       html: `
         <div style="font-family: sans-serif; padding: 20px; border: 1px solid #C0AE92; border-radius: 8px;">
@@ -53,7 +60,7 @@ export async function POST(request) {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
-    console.error("Resend Error:", error);
-    return NextResponse.json({ error: "Could not send emails" }, { status: 500 });
+    console.error("Resend Error Detail:", error);
+    return NextResponse.json({ error: "Could not send emails", detail: error.message }, { status: 500 });
   }
 }
