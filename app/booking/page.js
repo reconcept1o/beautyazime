@@ -150,10 +150,10 @@ export default function BookingPage() {
             <textarea name="message" style={{ ...inputStyle, height: "100px", resize: "none" }} placeholder="Any special requests?"></textarea>
           </div>
 
-          {/* CLOUDFLARE TURNSTILE WIDGET */}
+          {/* CLOUDFLARE TURNSTILE WIDGET - SITE KEY EKLENDİ 🎯 */}
           <div style={{ display: "flex", justifyContent: "center", margin: "10px 0" }}>
             <Turnstile 
-              siteKey="BURAYA_SITE_KEY_GELECEK" 
+              siteKey="0x4AAAAAACtZEdhnpsfVkIM1" 
               onSuccess={(token) => setToken(token)} 
               options={{ theme: 'light' }}
             />
@@ -182,7 +182,7 @@ export default function BookingPage() {
   );
 }
 
-// Stiller
+// Stiller aynı şekilde korundu
 const inputGroup = { display: "flex", flexDirection: "column", gap: "5px", width: "100%" };
 const labelStyle = { fontSize: "11px", fontWeight: "700", color: "#333", letterSpacing: "1px", textTransform: "uppercase" };
 const inputStyle = { 
