@@ -1,15 +1,27 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 export default function BookingPage() {
-  const [status, setStatus] = useState("idle");
+  const [status, setStatus] = useState("idle"); // idle, loading, success, error
+  const [token, setToken] = useState(""); // Turnstile token'ı için state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Güvenlik kontrolü: Token yoksa formu gönderme
+    if (!token) {
+      alert("Please verify you are human!");
+      return;
+    }
+
     setStatus("loading");
     const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
+    const data = {
+      ...Object.fromEntries(formData),
+      token // Turnstile token'ını API'ye gönderiyoruz
+    };
 
     try {
       const res = await fetch("/api/send", {
@@ -17,8 +29,12 @@ export default function BookingPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (res.ok) setStatus("success");
-      else setStatus("error");
+
+      if (res.ok) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
     } catch (err) {
       setStatus("error");
     }
@@ -26,32 +42,52 @@ export default function BookingPage() {
 
   if (status === "success") {
     return (
-      <div style={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "20px", background: "#C0AE92", color: "white" }}>
+      <div style={{ 
+        height: "100vh", 
+        display: "flex", 
+        flexDirection: "column", 
+        justifyContent: "center", 
+        alignItems: "center", 
+        textAlign: "center", 
+        padding: "20px", 
+        background: "#C0AE92", 
+        color: "white" 
+      }}>
         <motion.h2 initial={{ scale: 0.5 }} animate={{ scale: 1 }}>Thank You!</motion.h2>
-        <p>Your request has been sent. Azime will contact you shortly.</p>
-        <button onClick={() => window.location.href = "/"} style={buttonStyle}>BACK TO HOME</button>
+        <p style={{ marginBottom: "20px" }}>Your request has been sent. Azime will contact you shortly.</p>
+        <button 
+          onClick={() => window.location.href = "/"} 
+          style={{...buttonStyle, backgroundColor: "#ffffff", color: "#C0AE92", width: "auto", padding: "15px 40px"}}
+        >
+          BACK TO HOME
+        </button>
       </div>
     );
   }
 
   return (
-    // Padding ayarları mobilde Header'ın altında kalmasın diye düzenlendi
     <div style={{ 
       paddingTop: "120px", 
       paddingBottom: "100px", 
-      width: "100%", // Genişlik %100
-      maxWidth: "100vw", // Ekran dışına çıkma
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
+      width: "100%", 
+      maxWidth: "100vw", 
+      display: "flex", 
+      flexDirection: "column", 
+      alignItems: "center", 
       overflowX: "hidden" 
     }}>
       <div style={{ 
-        width: "90%", // Mobilde kenarlardan boşluk bırakır
-        maxWidth: "500px", // Masaüstünde çok yayılmaz
+        width: "90%", 
+        maxWidth: "500px", 
         margin: "0 auto" 
       }}>
-        <h1 style={{ textAlign: "center", color: "#B50004", marginBottom: "10px", fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(24px, 6vw, 36px)" }}>
+        <h1 style={{ 
+          textAlign: "center", 
+          color: "#B50004", 
+          marginBottom: "10px", 
+          fontFamily: "'Cormorant Garamond', serif", 
+          fontSize: "clamp(24px, 6vw, 36px)" 
+        }}>
           Book an Appointment
         </h1>
         <p style={{ textAlign: "center", color: "#666", marginBottom: "30px", fontSize: "14px" }}>
@@ -114,16 +150,39 @@ export default function BookingPage() {
             <textarea name="message" style={{ ...inputStyle, height: "100px", resize: "none" }} placeholder="Any special requests?"></textarea>
           </div>
 
-          <button type="submit" disabled={status === "loading"} style={buttonStyle}>
+          {/* CLOUDFLARE TURNSTILE WIDGET */}
+          <div style={{ display: "flex", justifyContent: "center", margin: "10px 0" }}>
+            <Turnstile 
+              siteKey="BURAYA_SITE_KEY_GELECEK" 
+              onSuccess={(token) => setToken(token)} 
+              options={{ theme: 'light' }}
+            />
+          </div>
+
+          <button 
+            type="submit" 
+            disabled={status === "loading" || !token} 
+            style={{
+              ...buttonStyle,
+              opacity: (status === "loading" || !token) ? 0.6 : 1,
+              cursor: (status === "loading" || !token) ? "not-allowed" : "pointer"
+            }}
+          >
             {status === "loading" ? "SENDING..." : "CONFIRM REQUEST"}
           </button>
-          {status === "error" && <p style={{ color: "red", textAlign: "center", fontSize: "14px" }}>Something went wrong. Please try again.</p>}
+          
+          {status === "error" && (
+            <p style={{ color: "#B50004", textAlign: "center", fontSize: "14px", fontWeight: "600" }}>
+              Something went wrong. Please try again.
+            </p>
+          )}
         </form>
       </div>
     </div>
   );
 }
 
+// Stiller
 const inputGroup = { display: "flex", flexDirection: "column", gap: "5px", width: "100%" };
 const labelStyle = { fontSize: "11px", fontWeight: "700", color: "#333", letterSpacing: "1px", textTransform: "uppercase" };
 const inputStyle = { 
@@ -133,7 +192,19 @@ const inputStyle = {
   fontFamily: "inherit", 
   fontSize: "16px", 
   outline: "none", 
-  width: "100%", // Mobilde dışarı taşmayı önleyen en kritik ayar
-  boxSizing: "border-box" // Padding'in genişliğe dahil edilmesini sağlar
+  width: "100%", 
+  boxSizing: "border-box",
+  backgroundColor: "#fdfdfd"
 };
-const buttonStyle = { padding: "18px", backgroundColor: "#B50004", color: "white", border: "none", borderRadius: "50px", fontWeight: "bold", cursor: "pointer", marginTop: "10px", letterSpacing: "1px", width: "100%" };
+const buttonStyle = { 
+  padding: "18px", 
+  backgroundColor: "#B50004", 
+  color: "white", 
+  border: "none", 
+  borderRadius: "50px", 
+  fontWeight: "bold", 
+  marginTop: "10px", 
+  letterSpacing: "1px", 
+  width: "100%",
+  transition: "all 0.3s ease"
+};

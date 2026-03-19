@@ -440,6 +440,11 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@marsidev/react-turnstile@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.npmjs.org/@marsidev/react-turnstile/-/react-turnstile-1.4.2.tgz#08a24c725049828a317136e1873bfeae64c86f72"
+  integrity sha512-xs1qOuyeMOz6t9BXXCXWiukC0/0+48vR08B7uwNdG05wCMnbcNgxiFmdFKDOFbM76qFYFRYlGeRfhfq1U/iZmA==
+
 "@napi-rs/wasm-runtime@^0.2.11":
   version "0.2.12"
   resolved "https://registry.npmjs.org/@napi-rs/wasm-runtime/-/wasm-runtime-0.2.12.tgz#3e78a8b96e6c33a6c517e1894efbd5385a7cb6f2"

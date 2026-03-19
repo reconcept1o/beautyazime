@@ -42,9 +42,7 @@ export default function HomePage() {
             >
               {/* ÜST BİLGİ GRUBU */}
               <div className="top-info-block">
-                <span className="booking-text">
-                  Book instantly on <a href="https://squareup.com" target="_blank" className="alert-link">Squareup.com</a> or text us via WhatsApp
-                </span>
+               
                 
                 {/* İLETİŞİM SATIRI */}
                 <div className="contact-row">
