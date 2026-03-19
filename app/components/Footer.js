@@ -96,9 +96,7 @@ export default function Footer() {
             <a href="https://www.instagram.com/azimebeautynyc" target="_blank" style={{ color: colors.white, fontSize: "20px" }}><FaInstagram /></a>
             <a href="https://www.facebook.com/azime.ozkaya.12" target="_blank" style={{ color: colors.white, fontSize: "20px" }}><FaFacebookF /></a>
           </div>
-          <a href="https://squareup.com" target="_blank" style={{ display: "inline-block", padding: "12px 25px", backgroundColor: colors.lipRed, color: colors.white, textDecoration: "none", fontSize: "12px", fontWeight: "700", borderRadius: "2px" }}>
-            BOOK APPOINTMENT
-          </a>
+         
         </div>
       </div>
 

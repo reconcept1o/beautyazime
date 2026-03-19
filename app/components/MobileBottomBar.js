@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function MobileBottomBar() {
   const colors = {
     lipRed: "#B50004",
-    brandBg: "#C0AE92", // Pricing butonu için markanın gold/bej tonu
+    brandBg: "#C0AE92", 
     white: "#ffffff",
     dark: "#1a1a1a"
   };
@@ -20,7 +20,7 @@ export default function MobileBottomBar() {
         style={{
           display: "flex",
           width: "100%",
-          height: "70px", // Biraz daha genişlettik, parmakla basması kolay olsun
+          height: "70px", 
           position: "fixed",
           bottom: 0,
           left: 0,
@@ -29,7 +29,7 @@ export default function MobileBottomBar() {
           backgroundColor: colors.white
         }}
       >
-        {/* SOL TARAF: PRICING (İnce ve Zarif) */}
+        {/* SOL TARAF: PRICING */}
         <Link 
           href="/pricing" 
           style={{
@@ -50,13 +50,11 @@ export default function MobileBottomBar() {
           VIEW PRICING
         </Link>
 
-        {/* SAĞ TARAF: BOOK NOW (Dikkat Çekici) */}
-        <a
-          href="https://squareup.com"
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* SAĞ TARAF: BOOK NOW (Artık Bizim Formu Açar) */}
+        <Link
+          href="/booking"
           style={{
-            flex: 1.2, // Randevu butonu biraz daha geniş olsun
+            flex: 1.2,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -69,8 +67,8 @@ export default function MobileBottomBar() {
             fontFamily: "'Montserrat', sans-serif",
           }}
         >
-          BOOK INSTANTLY
-        </a>
+          BOOK NOW
+        </Link>
       </motion.div>
 
       <style jsx>{`

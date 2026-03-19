@@ -58,7 +58,7 @@ export default function RootLayout({ children }) {
       <body suppressHydrationWarning={true} style={{ 
         margin: 0, padding: 0, boxSizing: 'border-box', backgroundColor: colors.white,
         fontFamily: "'Montserrat', sans-serif", WebkitFontSmoothing: 'antialiased',
-        overflowX: 'hidden' // Dışarı taşmaları engeller
+        overflowX: 'hidden'
       }}>
         
         <header style={{
@@ -109,10 +109,9 @@ export default function RootLayout({ children }) {
           </nav>
 
           <div style={{ justifySelf: "end", display: "flex", alignItems: "center", gap: "15px" }}>
-            <a 
-              href="https://wa.me/19147464232" 
-              target="_blank" 
-              rel="noopener noreferrer"
+            {/* BOOK NOW Butonu Sayfaya Yönlendirildi */}
+            <Link 
+              href="/booking"
               className="desktop-nav"
               style={{
                 textDecoration: "none",
@@ -123,10 +122,11 @@ export default function RootLayout({ children }) {
                 padding: "10px 20px",
                 letterSpacing: "1.5px",
                 borderRadius: "50px 10px 50px 10px", 
+                textAlign: "center"
               }}
             >
               BOOK NOW
-            </a>
+            </Link>
 
             <motion.button 
               className="mobile-btn"
@@ -141,10 +141,10 @@ export default function RootLayout({ children }) {
               }}
             >
               <div style={{ display: "flex", flexDirection: "column", gap: "6px", alignItems: "flex-end" }}>
-  <div style={{ width: "28px", height: "2px", background: colors.white, borderRadius: "2px" }}></div>
-  <div style={{ width: "18px", height: "2px", background: colors.white, borderRadius: "2px" }}></div>
-  <div style={{ width: "24px", height: "2px", background: colors.white, borderRadius: "2px" }}></div>
-</div>
+                <div style={{ width: "28px", height: "2px", background: colors.white, borderRadius: "2px" }}></div>
+                <div style={{ width: "18px", height: "2px", background: colors.white, borderRadius: "2px" }}></div>
+                <div style={{ width: "24px", height: "2px", background: colors.white, borderRadius: "2px" }}></div>
+              </div>
             </motion.button>
           </div>
         </header>
@@ -174,6 +174,10 @@ export default function RootLayout({ children }) {
                     <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)} style={{ textDecoration: "none", color: colors.white, fontSize: "32px", fontFamily: "'Cormorant Garamond', serif" }}>{link.name}</Link>
                   </motion.div>
                 ))}
+                {/* Mobilde Menü İçine de Randevu Linki Ekleyelim */}
+                <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: navLinks.length * 0.1 }}>
+                  <Link href="/booking" onClick={() => setIsMobileMenuOpen(false)} style={{ textDecoration: "none", color: colors.lipRed, fontSize: "32px", fontWeight: "bold", fontFamily: "'Cormorant Garamond', serif" }}>BOOK NOW</Link>
+                </motion.div>
               </div>
             </motion.div>
           )}
@@ -196,7 +200,7 @@ export default function RootLayout({ children }) {
               animate={{ scale: 1 }}
               style={{
                 position: "fixed",
-                bottom: "85px", // Barın üstünde durması için
+                bottom: "85px",
                 right: "20px",
                 zIndex: 1500,
                 backgroundColor: colors.whatsapp,
