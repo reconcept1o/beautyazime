@@ -19,7 +19,7 @@ export async function POST(request) {
     // 1. Azime Hanım'a Gelen Bildirim (Admin Maili)
     await resend.emails.send({
       from: 'Azime Beauty <info@send.azimebeauty.com>', 
-      to: 'azimebeautynyc@gmail.com', // Azime Hanım'ın maili
+      to: 'azimebeauty@gmail.com', // Azime Hanım'ın maili
       reply_to: email, 
       subject: `New Request: ${service} - ${name}`,
       html: `
