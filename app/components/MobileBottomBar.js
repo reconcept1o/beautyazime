@@ -1,47 +1,79 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function MobileBottomBar() {
   const colors = {
     lipRed: "#B50004",
+    brandBg: "#C0AE92", // Pricing butonu için markanın gold/bej tonu
     white: "#ffffff",
+    dark: "#1a1a1a"
   };
 
   return (
     <div className="mobile-bottom-bar-wrapper">
-      <motion.a
-        href="https://squareup.com" 
-        target="_blank"
-        rel="noopener noreferrer"
+      <motion.div
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         style={{
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           width: "100%",
-          height: "65px",
-          backgroundColor: colors.lipRed,
-          color: colors.white,
-          textDecoration: "none",
-          fontSize: "14px",
-          fontWeight: "700",
-          letterSpacing: "3px",
-          boxShadow: "0 -4px 20px rgba(0,0,0,0.4)",
-          fontFamily: "'Montserrat', sans-serif",
+          height: "70px", // Biraz daha genişlettik, parmakla basması kolay olsun
           position: "fixed",
           bottom: 0,
           left: 0,
-          zIndex: 9999
+          zIndex: 9999,
+          boxShadow: "0 -4px 25px rgba(0,0,0,0.2)",
+          backgroundColor: colors.white
         }}
       >
-        BOOK NOW
-      </motion.a>
+        {/* SOL TARAF: PRICING (İnce ve Zarif) */}
+        <Link 
+          href="/pricing" 
+          style={{
+            flex: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: colors.white,
+            color: colors.dark,
+            textDecoration: "none",
+            fontSize: "12px",
+            fontWeight: "600",
+            letterSpacing: "2px",
+            borderRight: "1px solid #eeeeee",
+            fontFamily: "'Montserrat', sans-serif",
+          }}
+        >
+          VIEW PRICING
+        </Link>
+
+        {/* SAĞ TARAF: BOOK NOW (Dikkat Çekici) */}
+        <a
+          href="https://squareup.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            flex: 1.2, // Randevu butonu biraz daha geniş olsun
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: colors.lipRed,
+            color: colors.white,
+            textDecoration: "none",
+            fontSize: "13px",
+            fontWeight: "700",
+            letterSpacing: "2px",
+            fontFamily: "'Montserrat', sans-serif",
+          }}
+        >
+          BOOK INSTANTLY
+        </a>
+      </motion.div>
 
       <style jsx>{`
-        /* Sadece mobil görünürlük kontrolü */
         .mobile-bottom-bar-wrapper {
           display: none;
         }
