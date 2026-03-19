@@ -5,22 +5,22 @@ import Image from "next/image";
 
 // Resim Importları (Aynen kalsın)
 import servicesHero from "../Assets/14.webp";
-import img1 from "../Assets/1.webp";
-import img2 from "../Assets/2.webp";
+import img1 from "../Assets/yeni/ClassicFacial.jpg";
+import img2 from "../Assets/yeni/deepcleaning.jpg";
 import img3 from "../Assets/3.webp";
-import img4 from "../Assets/4.webp";
+import img4 from "../Assets/yeni/antiaging.jpg";
 import img5 from "../Assets/5.webp";
 import img6 from "../Assets/6.webp";
 import img7 from "../Assets/7.webp";
-import img8 from "../Assets/8.webp";
+import img8 from "../Assets/yeni/powder.jpg";
 import img9 from "../Assets/9.webp";
 import img10 from "../Assets/10.webp";
 import img11 from "../Assets/11.webp";
-import img12 from "../Assets/12.webp";
+import img12 from "../Assets/yeni/libblush.jpg";
 import img13 from "../Assets/13.webp";
-import img15 from "../Assets/15.webp";
+import img15 from "../Assets/yeni/Brow Lifting.jpg";
 import img16 from "../Assets/16.webp";
-import img17 from "../Assets/17.webp";
+import img17 from "../Assets/yeni/LashVitaminTreatment.jpg";
 
 const ServiceItem = ({ title, description, reverse, imageSrc }) => (
   <motion.div 

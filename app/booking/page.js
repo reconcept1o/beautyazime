@@ -1,16 +1,27 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // 1. useEffect ekledik
 import { motion } from "framer-motion";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { useRouter } from "next/navigation"; // 2. Yönlendirme için ekledik
 
 export default function BookingPage() {
-  const [status, setStatus] = useState("idle"); // idle, loading, success, error
-  const [token, setToken] = useState(""); // Turnstile token'ı için state
+  const router = useRouter();
+  const [status, setStatus] = useState("idle"); 
+  const [token, setToken] = useState("");
+
+  // Başarılı olduğunda otomatik yönlendirme yapan useEffect
+  useEffect(() => {
+    if (status === "success") {
+      const timer = setTimeout(() => {
+        router.push("/"); // 4 saniye sonra ana sayfaya atar
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [status, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Güvenlik kontrolü: Token yoksa formu gönderme
     if (!token) {
       alert("Please verify you are human!");
       return;
@@ -20,7 +31,7 @@ export default function BookingPage() {
     const formData = new FormData(e.target);
     const data = {
       ...Object.fromEntries(formData),
-      token // Turnstile token'ını API'ye gönderiyoruz
+      token 
     };
 
     try {
@@ -53,14 +64,37 @@ export default function BookingPage() {
         background: "#C0AE92", 
         color: "white" 
       }}>
-        <motion.h2 initial={{ scale: 0.5 }} animate={{ scale: 1 }}>Thank You!</motion.h2>
-        <p style={{ marginBottom: "20px" }}>Your request has been sent. Azime will contact you shortly.</p>
-        <button 
-          onClick={() => window.location.href = "/"} 
-          style={{...buttonStyle, backgroundColor: "#ffffff", color: "#C0AE92", width: "auto", padding: "15px 40px"}}
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5 }}
         >
-          BACK TO HOME
-        </button>
+          <h2 style={{ fontSize: "2.5rem", marginBottom: "15px", fontFamily: "'Cormorant Garamond', serif" }}>
+            Thank You!
+          </h2>
+          <p style={{ fontSize: "1.1rem", marginBottom: "30px", maxWidth: "400px" }}>
+            Your request has been sent successfully. We will get back to you as soon as possible.
+          </p>
+          <p style={{ fontSize: "0.9rem", opacity: 0.8 }}>
+            Redirecting to home page in a few seconds...
+          </p>
+          <button 
+            onClick={() => router.push("/")} 
+            style={{
+              marginTop: "30px",
+              padding: "15px 40px",
+              borderRadius: "50px",
+              border: "none",
+              backgroundColor: "white",
+              color: "#C0AE92",
+              fontWeight: "bold",
+              cursor: "pointer",
+              boxShadow: "0 4px 15px rgba(0,0,0,0.1)"
+            }}
+          >
+            GO BACK NOW
+          </button>
+        </motion.div>
       </div>
     );
   }
@@ -76,18 +110,8 @@ export default function BookingPage() {
       alignItems: "center", 
       overflowX: "hidden" 
     }}>
-      <div style={{ 
-        width: "90%", 
-        maxWidth: "500px", 
-        margin: "0 auto" 
-      }}>
-        <h1 style={{ 
-          textAlign: "center", 
-          color: "#B50004", 
-          marginBottom: "10px", 
-          fontFamily: "'Cormorant Garamond', serif", 
-          fontSize: "clamp(24px, 6vw, 36px)" 
-        }}>
+      <div style={{ width: "90%", maxWidth: "500px", margin: "0 auto" }}>
+        <h1 style={{ textAlign: "center", color: "#B50004", marginBottom: "10px", fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(24px, 6vw, 36px)" }}>
           Book an Appointment
         </h1>
         <p style={{ textAlign: "center", color: "#666", marginBottom: "30px", fontSize: "14px" }}>
@@ -150,7 +174,6 @@ export default function BookingPage() {
             <textarea name="message" style={{ ...inputStyle, height: "100px", resize: "none" }} placeholder="Any special requests?"></textarea>
           </div>
 
-          {/* CLOUDFLARE TURNSTILE WIDGET - SITE KEY EKLENDİ 🎯 */}
           <div style={{ display: "flex", justifyContent: "center", margin: "10px 0" }}>
             <Turnstile 
               siteKey="0x4AAAAAACtZEdhnpsfVkIM1" 
@@ -182,29 +205,7 @@ export default function BookingPage() {
   );
 }
 
-// Stiller aynı şekilde korundu
 const inputGroup = { display: "flex", flexDirection: "column", gap: "5px", width: "100%" };
 const labelStyle = { fontSize: "11px", fontWeight: "700", color: "#333", letterSpacing: "1px", textTransform: "uppercase" };
-const inputStyle = { 
-  padding: "15px", 
-  border: "1px solid #ddd", 
-  borderRadius: "8px", 
-  fontFamily: "inherit", 
-  fontSize: "16px", 
-  outline: "none", 
-  width: "100%", 
-  boxSizing: "border-box",
-  backgroundColor: "#fdfdfd"
-};
-const buttonStyle = { 
-  padding: "18px", 
-  backgroundColor: "#B50004", 
-  color: "white", 
-  border: "none", 
-  borderRadius: "50px", 
-  fontWeight: "bold", 
-  marginTop: "10px", 
-  letterSpacing: "1px", 
-  width: "100%",
-  transition: "all 0.3s ease"
-};
+const inputStyle = { padding: "15px", border: "1px solid #ddd", borderRadius: "8px", fontFamily: "inherit", fontSize: "16px", outline: "none", width: "100%", boxSizing: "border-box", backgroundColor: "#fdfdfd" };
+const buttonStyle = { padding: "18px", backgroundColor: "#B50004", color: "white", border: "none", borderRadius: "50px", fontWeight: "bold", marginTop: "10px", letterSpacing: "1px", width: "100%", transition: "all 0.3s ease" };

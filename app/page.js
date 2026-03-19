@@ -112,36 +112,59 @@ export default function HomePage() {
         }
 
         /* BİLGİ BLOĞU STİLLERİ */
-        .top-info-block {
-          margin-bottom: 30px;
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-        .booking-text {
-          color: #ffffff;
-          font-size: clamp(10px, 1.2vw, 13px);
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          font-family: 'Montserrat', sans-serif;
-          font-weight: 500;
-        }
-        .alert-link { color: #ffffff; text-decoration: underline; font-weight: 700; }
+       .top-info-block {
+  margin-bottom: 40px; /* Biraz daha aşağı çektik logo ile arası açılsın */
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Satır arası boşluğu artırdık */
+}
 
-        .contact-row, .address-row {
-          color: #ffffff;
-          font-size: clamp(11px, 1.1vw, 14px);
-          letter-spacing: 1.5px;
-          font-weight: 400;
-          opacity: 0.9;
-        }
-        .address-row {
-          font-size: clamp(10px, 1vw, 12px);
-          opacity: 0.8;
-          margin-top: 5px;
-          text-transform: uppercase;
-        }
-        .separator { margin: 0 15px; opacity: 0.5; }
+.contact-row {
+  color: #ffffff;
+  /* Mobilde 14px, Masaüstünde 18px olacak şekilde dinamik (Okunaklılık arttı) */
+  font-size: clamp(14px, 1.5vw, 18px); 
+  letter-spacing: 1px; /* Çok genişletmeden net okunsun */
+  font-weight: 500;
+  opacity: 1; /* Opaklığı artırdık ki daha beyaz ve net görünsün */
+}
+
+.address-row {
+  color: #ffffff;
+  /* Mobilde 12px, Masaüstünde 15px */
+  font-size: clamp(12px, 1.2vw, 15px);
+  opacity: 0.9;
+  margin-top: 5px;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.separator { 
+  margin: 0 15px; 
+  opacity: 0.6; 
+  font-weight: 300;
+}
+
+/* MOBİL UYUMLULUK AYARLARI */
+@media (max-width: 768px) {
+  .top-info-block {
+    margin-bottom: 25px;
+    gap: 10px;
+  }
+  .contact-row {
+    display: flex;
+    flex-direction: column; /* Mobilde alt alta gelmesi okumayı kolaylaştırır */
+    gap: 8px;
+    font-size: 16px; /* Mobilde net okunması için sabit değer verdik */
+  }
+  .separator { display: none; } /* Mobilde çizgiye gerek yok, zaten alt alta */
+  
+  .address-row { 
+    padding: 0 20px; 
+    line-height: 1.4;
+    font-size: 13px; 
+  }
+}
 
         /* LOGO STİLLERİ */
         .main-logo {
