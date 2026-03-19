@@ -48,7 +48,7 @@ export default function RootLayout({ children }) {
   const headerTopValue = !mounted ? "0" : (isVisible ? "0" : "-140px");
 
   return (
-    <html lang="tr">
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -140,10 +140,11 @@ export default function RootLayout({ children }) {
                 padding: "10px"
               }}
             >
-              <div style={{ display: "flex", flexDirection: "column", gap: "5px", alignItems: "flex-end" }}>
-                <div style={{ width: "24px", height: "1.5px", background: colors.white }}></div>
-                <div style={{ width: "16px", height: "1.5px", background: colors.white }}></div>
-              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px", alignItems: "flex-end" }}>
+  <div style={{ width: "28px", height: "2px", background: colors.white, borderRadius: "2px" }}></div>
+  <div style={{ width: "18px", height: "2px", background: colors.white, borderRadius: "2px" }}></div>
+  <div style={{ width: "24px", height: "2px", background: colors.white, borderRadius: "2px" }}></div>
+</div>
             </motion.button>
           </div>
         </header>
