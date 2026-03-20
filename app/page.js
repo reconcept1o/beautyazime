@@ -42,7 +42,6 @@ export default function HomePage() {
             >
               {/* ÜST BİLGİ GRUBU */}
               <div className="top-info-block">
-               
                 
                 {/* İLETİŞİM SATIRI */}
                 <div className="contact-row">
@@ -51,7 +50,7 @@ export default function HomePage() {
                   <span>+1 914-746-4232</span>
                 </div>
 
-                {/* ADRES SATIRI (YENİ EKLEDİK) */}
+                {/* ADRES SATIRI */}
                 <div className="address-row">
                   48-17 Skillman Ave, Sunnyside, New York, NY 11104
                 </div>
@@ -63,15 +62,25 @@ export default function HomePage() {
               </h1>
 
               <p className="clinic-slogan">
-                PERMANENT MAKEUP & ADVANCED SKIN CLINIC
+                Permanent Makeup & Skin Specialist
               </p>
 
-              {/* SOSYAL MEDYA */}
+              {/* SOSYAL MEDYA - RENKLENDİRİLDİ */}
               <div className="social-icons">
-                <a href="https://www.instagram.com/azimebeautynyc" target="_blank" className="social-link">
+                <a 
+                  href="https://www.instagram.com/azimebeautynyc" 
+                  target="_blank" 
+                  className="social-link instagram"
+                  rel="noopener noreferrer"
+                >
                   <FaInstagram />
                 </a>
-                <a href="https://www.facebook.com/azime.ozkaya.12" target="_blank" className="social-link">
+                <a 
+                  href="https://www.facebook.com/azime.ozkaya.12" 
+                  target="_blank" 
+                  className="social-link facebook"
+                  rel="noopener noreferrer"
+                >
                   <FaFacebookF />
                 </a>
               </div>
@@ -111,60 +120,35 @@ export default function HomePage() {
           text-shadow: 0 2px 15px rgba(0,0,0,0.4);
         }
 
-        /* BİLGİ BLOĞU STİLLERİ */
-       .top-info-block {
-  margin-bottom: 40px; /* Biraz daha aşağı çektik logo ile arası açılsın */
-  display: flex;
-  flex-direction: column;
-  gap: 12px; /* Satır arası boşluğu artırdık */
-}
+        .top-info-block {
+          margin-bottom: 40px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
 
-.contact-row {
-  color: #ffffff;
-  /* Mobilde 14px, Masaüstünde 18px olacak şekilde dinamik (Okunaklılık arttı) */
-  font-size: clamp(14px, 1.5vw, 18px); 
-  letter-spacing: 1px; /* Çok genişletmeden net okunsun */
-  font-weight: 500;
-  opacity: 1; /* Opaklığı artırdık ki daha beyaz ve net görünsün */
-}
+        .contact-row {
+          color: #ffffff;
+          font-size: clamp(14px, 1.5vw, 18px); 
+          letter-spacing: 1px;
+          font-weight: 500;
+        }
 
-.address-row {
-  color: #ffffff;
-  /* Mobilde 12px, Masaüstünde 15px */
-  font-size: clamp(12px, 1.2vw, 15px);
-  opacity: 0.9;
-  margin-top: 5px;
-  text-transform: uppercase;
-  font-weight: 400;
-  letter-spacing: 1px;
-}
+        .address-row {
+          color: #ffffff;
+          font-size: clamp(12px, 1.2vw, 15px);
+          opacity: 0.9;
+          margin-top: 5px;
+          text-transform: uppercase;
+          font-weight: 400;
+          letter-spacing: 1px;
+        }
 
-.separator { 
-  margin: 0 15px; 
-  opacity: 0.6; 
-  font-weight: 300;
-}
-
-/* MOBİL UYUMLULUK AYARLARI */
-@media (max-width: 768px) {
-  .top-info-block {
-    margin-bottom: 25px;
-    gap: 10px;
-  }
-  .contact-row {
-    display: flex;
-    flex-direction: column; /* Mobilde alt alta gelmesi okumayı kolaylaştırır */
-    gap: 8px;
-    font-size: 16px; /* Mobilde net okunması için sabit değer verdik */
-  }
-  .separator { display: none; } /* Mobilde çizgiye gerek yok, zaten alt alta */
-  
-  .address-row { 
-    padding: 0 20px; 
-    line-height: 1.4;
-    font-size: 13px; 
-  }
-}
+        .separator { 
+          margin: 0 15px; 
+          opacity: 0.6; 
+          font-weight: 300;
+        }
 
         /* LOGO STİLLERİ */
         .main-logo {
@@ -188,21 +172,48 @@ export default function HomePage() {
           color: #ffffff;
         }
 
-        .social-icons { display: flex; gap: 30px; margin-top: 40px; }
-        .social-link { color: #ffffff; font-size: 26px; transition: opacity 0.3s; }
-        .social-link:hover { opacity: 0.6; }
+        /* SOSYAL MEDYA ÖZEL RENKLER */
+        .social-icons { display: flex; gap: 35px; margin-top: 40px; }
+        
+        .social-link { 
+          font-size: 32px; 
+          transition: transform 0.3s ease, filter 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .social-link:hover {
+          transform: scale(1.15);
+        }
+
+        .instagram {
+          color: #E4405F; /* Instagram Marka Rengi */
+          filter: drop-shadow(0 0 8px rgba(228, 64, 95, 0.4));
+        }
+
+        .facebook {
+          color: #1877F2; /* Facebook Marka Rengi */
+          filter: drop-shadow(0 0 8px rgba(24, 119, 242, 0.4));
+        }
 
         @media (max-width: 768px) {
+          .top-info-block {
+            margin-bottom: 25px;
+            gap: 10px;
+          }
           .contact-row {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 8px;
+            font-size: 16px;
           }
           .separator { display: none; }
           .main-logo { letter-spacing: 12px; }
           .sub-logo { letter-spacing: 15px; }
           .clinic-slogan { white-space: normal; line-height: 1.6; padding: 0 20px; }
           .address-row { padding: 0 15px; }
+          .social-icons { gap: 40px; }
         }
       `}</style>
     </main>

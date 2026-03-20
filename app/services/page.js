@@ -5,21 +5,21 @@ import Image from "next/image";
 
 // Resim Importları (Aynen kalsın)
 import servicesHero from "../Assets/14.webp";
-import img1 from "../Assets/yeni/ClassicFacial.jpg";
-import img2 from "../Assets/yeni/deepcleaning.jpg";
-import img3 from "../Assets/3.webp";
-import img4 from "../Assets/yeni/antiaging.jpg";
-import img5 from "../Assets/5.webp";
-import img6 from "../Assets/6.webp";
-import img7 from "../Assets/7.webp";
-import img8 from "../Assets/yeni/powder.jpg";
-import img9 from "../Assets/9.webp";
-import img10 from "../Assets/10.webp";
-import img11 from "../Assets/11.webp";
+import img1 from "../Assets/son/facialtreatment.jpg";
+import img2 from "../Assets/son/DeepFacial.webp";
+import img3 from "../Assets/son/Hydrafacial.webp";
+import img4 from "../Assets/son/anti-aging.jpg";
+import img5 from "../Assets/son/darkspot.png";
+import img6 from "../Assets/son/acne.webp";
+import img7 from "../Assets/son/microneedling.webp";
+import img8 from "../Assets/son/powder.webp";
+import img9 from "../Assets/son/microbleding.webp";
+import img10 from "../Assets/son/Hybrid Brows.webp";
+import img11 from "../Assets/son/Eyeliner & Dipliner.jpg";
 import img12 from "../Assets/yeni/libblush.jpg";
-import img13 from "../Assets/13.webp";
-import img15 from "../Assets/yeni/Brow Lifting.jpg";
-import img16 from "../Assets/16.webp";
+import img13 from "../Assets/son/scalp.jpg";
+import img15 from "../Assets/son/browlifting.jpeg";
+import img16 from "../Assets/son/keratin.webp";
 import img17 from "../Assets/yeni/LashVitaminTreatment.jpg";
 
 const ServiceItem = ({ title, description, reverse, imageSrc }) => (
@@ -138,7 +138,7 @@ export default function ServicesPage() {
             margin: 0,
             lineHeight: 1
           }}>
-            Our Services
+         SERVICES BY AZIME
           </h1>
         </div>
       </section>

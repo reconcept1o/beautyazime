@@ -1,11 +1,45 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
 import Footer from "./components/Footer";
 import MobileBottomBar from "./components/MobileBottomBar";
+
+// 1. JSON-LD Structured Data: Google'a "Burası bir yerel güzellik kliniğidir" diyoruz.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BeautySalon",
+  "name": "Azime Beauty",
+  "image": "https://azimebeauty.com/hero.webp",
+  "@id": "https://azimebeauty.com",
+  "url": "https://azimebeauty.com",
+  "telephone": "+19147464232",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "48-17 Skillman Ave",
+    "addressLocality": "Sunnyside",
+    "addressRegion": "NY",
+    "postalCode": "11104",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 40.7447, // Sunnyside koordinatları
+    "longitude": -73.9161
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "opens": "09:00",
+    "closes": "20:00"
+  },
+  "sameAs": [
+    "https://www.instagram.com/azimebeautynyc",
+    "https://www.facebook.com/azime.ozkaya.12"
+  ],
+  "servesCuisine": "Permanent Makeup, Microblading, Skin Care, Hydrafacial, Scalp Pigmentation"
+};
 
 export default function RootLayout({ children }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -50,11 +84,29 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* SEO - META TAGS */}
+        <title>Azime Beauty | Best Microblading & Skin Clinic in Sunnyside, NY</title>
+        <meta name="description" content="Premium Permanent Makeup & Advanced Skin Clinic in Queens, NY. Expert Microblading, Lip Blushing, Hydrafacial, and Scalp Pigmentation by Azime." />
+        <meta name="keywords" content="Microblading Sunnyside, Permanent Makeup Queens NY, Lip Blushing New York, Skin Care Sunnyside, Scalp Pigmentation NY, Azime Beauty" />
+        
+        {/* Open Graph (Social Media) */}
+        <meta property="og:title" content="Azime Beauty | Advanced Skin Clinic NY" />
+        <meta property="og:description" content="Transform your beauty with expert permanent makeup and skin treatments in Sunnyside, NY." />
+        <meta property="og:url" content="https://azimebeauty.com" />
+        <meta property="og:type" content="website" />
+        
+        {/* JSON-LD INJECTION */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
       </head>
+      
       <body suppressHydrationWarning={true} style={{ 
         margin: 0, padding: 0, boxSizing: 'border-box', backgroundColor: colors.white,
         fontFamily: "'Montserrat', sans-serif", WebkitFontSmoothing: 'antialiased',
@@ -109,7 +161,6 @@ export default function RootLayout({ children }) {
           </nav>
 
           <div style={{ justifySelf: "end", display: "flex", alignItems: "center", gap: "15px" }}>
-            {/* BOOK NOW Butonu Sayfaya Yönlendirildi */}
             <Link 
               href="/booking"
               className="desktop-nav"
@@ -130,6 +181,7 @@ export default function RootLayout({ children }) {
 
             <motion.button 
               className="mobile-btn"
+              aria-label="Toggle Menu"
               onClick={() => setIsMobileMenuOpen(true)}
               whileTap={{ scale: 0.9 }}
               style={{ 
@@ -174,7 +226,6 @@ export default function RootLayout({ children }) {
                     <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)} style={{ textDecoration: "none", color: colors.white, fontSize: "32px", fontFamily: "'Cormorant Garamond', serif" }}>{link.name}</Link>
                   </motion.div>
                 ))}
-                {/* Mobilde Menü İçine de Randevu Linki Ekleyelim */}
                 <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: navLinks.length * 0.1 }}>
                   <Link href="/booking" onClick={() => setIsMobileMenuOpen(false)} style={{ textDecoration: "none", color: colors.lipRed, fontSize: "32px", fontWeight: "bold", fontFamily: "'Cormorant Garamond', serif" }}>BOOK NOW</Link>
                 </motion.div>
@@ -183,7 +234,7 @@ export default function RootLayout({ children }) {
           )}
         </AnimatePresence>
 
-        <main style={{ minHeight: "100vh", width: "100%", overflowX: "hidden" }}>
+        <main id="main-content" style={{ minHeight: "100vh", width: "100%", overflowX: "hidden" }}>
           {children}
         </main>
 
@@ -196,6 +247,7 @@ export default function RootLayout({ children }) {
               href="https://wa.me/19147464232"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Contact on WhatsApp"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               style={{
@@ -221,7 +273,7 @@ export default function RootLayout({ children }) {
 
         <style jsx global>{`
           * { box-sizing: border-box; }
-          html, body { overflow-x: hidden; width: 100%; }
+          html, body { overflow-x: hidden; width: 100%; scroll-behavior: smooth; }
           h1, h2, h3 { font-family: 'Cormorant Garamond', serif !important; }
           
           @media (max-width: 900px) {

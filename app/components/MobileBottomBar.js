@@ -7,7 +7,7 @@ export default function MobileBottomBar() {
   const colors = {
     lipRed: "#B50004",
     brandBg: "#C0AE92", 
-    white: "#ffffff",
+    white: "#856E5D",
     dark: "#1a1a1a"
   };
 

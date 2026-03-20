@@ -7,7 +7,7 @@ import { FaInstagram, FaFacebookF, FaWhatsapp, FaEnvelope, FaMapMarkerAlt } from
 export default function Footer() {
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [currentYear, setCurrentYear] = useState(2026); // Statik başlangıç
+  const [currentYear, setCurrentYear] = useState(2026);
 
   useEffect(() => {
     setMounted(true);
@@ -25,9 +25,10 @@ export default function Footer() {
     lipRed: "#B50004",
     dark: "#1a1a1a",
     white: "#ffffff",
+    instagram: "#E4405F",
+    facebook: "#1877F2"
   };
 
-  // Hydration hatasını engellemek için bileşen tam yüklenene kadar basit bir yapı döner
   if (!mounted) return null;
 
   return (
@@ -89,47 +90,57 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* SOSYAL MEDYA & REZERVASYON */}
+        {/* SOSYAL MEDYA */}
         <div>
           <h4 style={{ fontSize: "14px", letterSpacing: "2px", marginBottom: "25px", fontWeight: "600" }}>FOLLOW US</h4>
-          <div style={{ display: "flex", gap: "20px", marginBottom: "30px" }}>
-            <a href="https://www.instagram.com/azimebeautynyc" target="_blank" style={{ color: colors.white, fontSize: "20px" }}><FaInstagram /></a>
-            <a href="https://www.facebook.com/azime.ozkaya.12" target="_blank" style={{ color: colors.white, fontSize: "20px" }}><FaFacebookF /></a>
+          <div style={{ display: "flex", gap: "25px", marginBottom: "30px" }}>
+            <a 
+              href="https://www.instagram.com/azimebeautynyc" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="footer-social-link insta"
+            >
+              <FaInstagram />
+            </a>
+            <a 
+              href="https://www.facebook.com/azime.ozkaya.12" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="footer-social-link face"
+            >
+              <FaFacebookF />
+            </a>
           </div>
-         
         </div>
       </div>
 
-      {/* ALT BİLGİ ALANI */}
+      {/* ALT BİLGİ ALANI - SADECE COPYRIGHT KALDI */}
       <div style={{ 
         borderTop: "1px solid rgba(255,255,255,0.1)", 
         paddingTop: "30px", 
         display: "flex", 
-        flexDirection: isMobile ? "column" : "row", 
-        justifyContent: "space-between", 
-        alignItems: "center",
-        gap: "15px"
+        justifyContent: "center", // Ortalandı
+        alignItems: "center"
       }}>
-        <p style={{ fontSize: "11px", opacity: "0.4", margin: 0 }}>
+        <p style={{ fontSize: "11px", opacity: "0.4", margin: 0, letterSpacing: "1px" }}>
           © {currentYear} AZIME BEAUTY. ALL RIGHTS RESERVED.
         </p>
-        
-        <a 
-          href="https://www.linkedin.com/in/s%C3%BCleyman-%C3%BCnver-9b3950245/" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          style={{ 
-            fontSize: "11px", 
-            opacity: "0.4", 
-            color: colors.white, 
-            textDecoration: "none",
-            fontWeight: "500",
-            letterSpacing: "1px"
-          }}
-        >
-          CREATED BY UNVER
-        </a>
       </div>
+
+      <style jsx>{`
+        .footer-social-link {
+          font-size: 24px;
+          transition: transform 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .footer-social-link:hover {
+          transform: translateY(-5px);
+        }
+        .insta { color: ${colors.instagram}; }
+        .face { color: ${colors.facebook}; }
+      `}</style>
     </footer>
   );
 }
